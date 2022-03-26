@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BiciShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+</head>
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom fixed-top mb-3">
+           
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BiciShop</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Admin page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Order" asp-action="Index">My orders</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Settings">Settings</a>
+                            </li>
+                        }
+
+
+                        @if (User.IsInRole("head"))
+                        {
+                            <li>
+                                <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Users">Users</a>
+                            </li>
+                        }
+                    </ul>
+
+                    <div>
+                        @if(User.Identity.IsAuthenticated)
+                         {
+                            
+                        <form method="post" action="~/Account/Logout">
+                            <span class="mb-3 mt-3 me-3 font-weight-light text-light">@User.Identity.Name</span>
+                            <input type="submit" value="Logout" class="btn btn-warning ms-3 me-3" />
+                        </form>
+                         }
+                    </div>
+                </div>
+           
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - BiciShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

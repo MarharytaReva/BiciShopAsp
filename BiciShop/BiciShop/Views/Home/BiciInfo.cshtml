@@ -1,0 +1,104 @@
+﻿@model BLL.DTO.BicicletaDTO
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div style="margin-top: 7rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <img src="data:image/png;base64,@Model.Photo" style="width: 100%; height: auto; min-width: 30rem; display: block;" />
+                @if (User.IsInRole("head") || User.IsInRole("admin"))
+                {
+                    <div class="btn-group w-100 text-center"  role="group" aria-label="Basic example">
+                        <button id="riseDelete" class="btn btn-outline-danger">Delete</button>
+                        <a class="btn btn-outline-warning"  href="~/Admin/Create/@Model.BicicletaId">Edit</a>
+                    </div>
+                    <div id="deletePanel" style="display: none" class="w-100 text-center">
+                        <p class="m-3 font-weight-light text-dark">Are you sure that you want to delete this good?</p>
+                        <div class="btn-group text-center" role="group" aria-label="Basic example">
+                            <form method="post" action="~/Admin/Delete">
+                                <input type="hidden" value="@Model.BicicletaId" name="id" />
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                            </form>
+                            <button id="canelBtn" class="btn btn-outline-dark">Cancel</button>
+                        </div>
+                    </div>
+                 }
+                    </div>
+
+            <div class="col" style="min-width: 50%;">
+                <h3 class="card-title">@Model.Title</h3>
+                @if (Model.Discount != 0)
+                {
+                    <div style="display: flex; flex-wrap: nowrap; justify-content: space-between;">
+                        <h3 class="text-right text-dark" style="text-decoration: line-through; font-weight: lighter;">@Model.Price ₴</h3>
+                        <h3 class="text-right text-danger ">@Model.GetValueWithDiscount() ₴</h3>
+                    </div>
+
+                }
+                else
+                {
+                    <h3 class="text-right text-success">@Model.Price ₴</h3>
+                }
+              
+                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                    <a href="~/Order/MakeOrder/@Model.BicicletaId" class="btn btn-dark" style="min-width: 50%;">Buy</a>
+                    <div style="max-width: 30%;">
+                        <form method="post" action="~/Cart/AddToCart">
+                            <input type="hidden" value="@Model.BicicletaId" name="BicicletaId" />
+                            @Html.Hidden("returnUrl", Context.Request.Path)
+                            <button style="max-width: 100%;" type="submit" class="btn btn-outline-success purchaseBtn">
+                                <img class="purchase btnIcon" src="~/Files/purchase_black.png" />
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+
+                @switch (Model.QuantityStatus)
+                {
+                    case BLL.DTO.StoreStatus.Available:
+                        <p class="text-success mt-1 text-left" style="font-weight: bold;">Available</p>
+                        break;
+                    case BLL.DTO.StoreStatus.NotAvailable:
+                        <p class="text-danger mt-1 text-left" style="font-weight: bold;">Not available</p>
+                        break;
+                    case BLL.DTO.StoreStatus.Few:
+                        <p class="text-dark bg-warning text-center" style="font-weight: bold;">Only @Model.Quantity left</p>
+                        break;
+                }
+            </div>
+        </div>
+        
+    </div>
+    <div class="container">
+        <h3 class="mt-4">Characteristics</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Type</td>
+                    <td>@Model.BiciType.BiciTypeName</td>
+                </tr>
+                <tr>
+                    <td>Color</td>
+                    <td>@Model.Color</td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td>@Model.Weight</td>
+                </tr>
+                <tr>
+                    <td>Issue year</td>
+                    <td>@Model.IssueYear</td>
+                </tr>
+                <tr>
+                    <td>Wheel diameter</td>
+                    <td>@Model.WheelDiameter</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

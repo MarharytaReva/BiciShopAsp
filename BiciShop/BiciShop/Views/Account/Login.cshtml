@@ -1,0 +1,44 @@
+﻿@model BiciShop.Models.ViewModels.LoginViewModel
+@{
+}
+<div class="text-center epicBack">
+    
+
+        <div style="opacity: 100%; z-index: 10; margin-top: 5rem;" class="container">
+            <h1 class="display-4 hLog">Login form</h1>
+            <form method="post" action="~/Account/Login" asp-antiforgery="true">
+                <input name="returnUrl" value="@Context.Request.Path" type="hidden" />
+
+                <div class="mb-3 row">
+                    @Html.LabelFor(x => x.Email, new { @class = "col-sm-2 col-form-label logLabel" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control logInp" })
+
+                        <span asp-validation-for="Email" class="alert alert-danger alertStyle logInp" role="alert">
+
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    @Html.LabelFor(x => x.Password, new { @class = "col-sm-2 col-form-label logLabel" })
+
+                    <div class="col-sm-10">
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control logInp" })
+
+                        <span asp-validation-for="Password" class="alert alert-danger alertStyle logInp" role="alert">
+
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label logLabel">Remember me</label>
+                    @Html.CheckBoxFor(x => x.RememberMe, new { @class = "m-3" })
+                </div>
+
+                <input type="submit" value="Login" class="btn btn-outline-success logBtns" />
+            </form>
+            <a class="btn btn-outline-primary mt-3 logBtns" style="z-index: 10;" href="~/Account/Registration">Registration</a>
+        </div>
+   
+</div>

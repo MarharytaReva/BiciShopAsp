@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BiciShop.Models.ViewModels.UserViewModel>
+@{
+}
+<div class="text-center">
+    <div style="text-align: left; width: 100%;">
+        <a style="position:sticky; left: 0px; top: 0px" class="btn btn-dark fs-3" href="~/User/Create">+</a>
+    </div>
+        
+  
+    <h1 class="display-4">Users</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User name</th>
+                <th>Roles</th>
+                <th> </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (var user in Model)
+            {
+            <tr>
+                <td>@user.User.Email</td>
+                <td>@user.Roles</td>
+                <td>
+                    <form method="post" action="~/User/Delete">
+                        <input type="hidden" value="@user.User.Id" name="userId" />
+                        <input type="submit" value="delete" class="btn btn-danger" />
+                    </form>
+                </td>
+                <td>
+                    <form method="get" action="~/User/Edit">
+                        <input type="hidden" value="@user.User.Id" name="userId" />
+                        <input type="submit" value="edit" class="btn btn-warning" />
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

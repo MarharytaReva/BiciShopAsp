@@ -1,0 +1,17 @@
+﻿
+@model BiciShop.Models.ViewModels.OrderIndexViewModel
+
+<div style="margin-top: 7rem;">
+    <div style="background-color: white;" class="d-flex justify-content-between px-5 py-2 mx-3">
+        <div class="input-group mx-2 mt-2 mb-2" style="max-width: 25rem;">
+            <select id="sortOrderSelect" class="custom-select" name="OrderQueryOptions.SortOptions.OrderSort" asp-items="@Model.SortOrders">
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-dark asyncLoadBtn">Sort order by date</button>
+            </div>
+        </div>
+    </div>
+    <div id="orderList">
+
+    </div>
+</div>

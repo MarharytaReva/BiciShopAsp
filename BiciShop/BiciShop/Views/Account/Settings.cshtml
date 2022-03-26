@@ -1,0 +1,21 @@
+﻿@model string
+@{
+}
+<div class="text-center" style="margin-top: 7rem;">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <form method="get" action="~/Account/ChangePassword">
+                <input type="hidden" value="@Model" name="userId" />
+                <input type="hidden" name="actionName" value="Settings" />
+                <input type="hidden" name="controllerName" value="Account" />
+                <input type="submit" value="Change password" style="border: none; background-color: white; text-decoration: underline;" class="text-primary" />
+            </form>
+        </li>
+        <li class="list-group-item">
+            <form method="post" action="~/Account/Logout">
+                <input type="submit" value="Logout" style="border: none; background-color: white; text-decoration: underline;" class="text-primary" />
+            </form>
+        </li>
+        
+    </ul>
+</div>

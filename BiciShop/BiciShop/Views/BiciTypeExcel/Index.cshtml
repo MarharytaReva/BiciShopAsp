@@ -1,0 +1,42 @@
+﻿@model BiciShop.Models.ViewModels.ExcelViewModels.TypeViewModel
+
+<div style="margin-top: 7rem;">
+    <h1>Export BiciTypes</h1>
+    <h3 class="text-center text-danger">@Model.ErrorText</h3>
+    <form method="post" action="~/BiciTypeExcel/ExportToExcel">
+        <input type="submit" value="Export" class="btn btn-primary" />
+    </form>
+
+    <h1 class="text-center">Edit</h1>
+    <table class="table mt-3">
+
+        <tbody>
+            @foreach (var type in Model.BiciTypes)
+            {
+                <tr>
+                    <td>
+                        <form method="post" action="~/BiciTypeExcel/Update" class="d-flex justify-content-center">
+                            <input type="hidden" name="BiciTypeId" value="@type.BiciTypeId" />
+                            <input value="@type.BiciTypeName" name="BiciTypeName" type="text" class="form-control w-50" id="exampleFormControlInput1" placeholder="type name">
+                            <input type="submit" value="Save" class="btn btn-outline-success" />
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="~/BiciTypeExcel/Delete">
+                            <input type="hidden" name="typeId" value="@type.BiciTypeId" />
+                            <input type="submit" value="Delete" class="btn btn-outline-danger" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h1 class="text-center">Create</h1>
+    <form method="post" action="~/BiciTypeExcel/Create" class="d-flex justify-content-center">
+        <input type="hidden" name="BiciTypeId" value="0" />
+        <input name="BiciTypeName" type="text" class="form-control w-50" id="exampleFormControlInput1" placeholder="type name">
+        <input type="submit" value="Save" class="btn btn-outline-success" />
+    </form>
+</div>
+
+

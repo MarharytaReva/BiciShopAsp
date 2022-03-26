@@ -1,0 +1,14 @@
+﻿
+
+@if (ViewBag.Discount != 0)
+{
+    <div style="display: flex; flex-wrap: nowrap; justify-content: space-between;">
+        <h3 class="text-right text-dark" style="text-decoration: line-through; font-weight: lighter;">@(ViewBag.Price * ViewBag.Count) ₴</h3>
+        <h3 class="text-right text-danger ">@(Convert.ToInt32((ViewBag.Price * (100 - ViewBag.Discount))/100) * ViewBag.Count) ₴</h3>
+    </div>
+
+}
+else
+{
+    <h3 class="text-right text-success">@(ViewBag.Price * ViewBag.Count) ₴</h3>
+}

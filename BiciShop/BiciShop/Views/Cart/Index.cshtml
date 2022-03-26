@@ -1,0 +1,58 @@
+﻿@model Cart
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center" style="margin-top: 7rem;">
+
+    <div style="background-color: white;" class="d-flex flex-wrap justify-content-between px-5 py-2 mx-3">
+        <div>
+            <a class="btn btn-dark" style="text-wrap: avoid; font-size: xx-large; font-weight: bolder;" href="~/Home/Index">&#8592;</a>
+            <form method="post" action="~/Cart/Clear" class="d-inline ml-4">
+                <input type="submit" class="btn btn-outline-danger mt-sm-3 mt-xs-3" value="Clear" />
+            </form>
+        </div>
+        <div class="d-flex flex-wrap mt-sm-3 mt-xs-3">
+
+            <div class="d-flex justify-content-end" style="min-width: 50%;">
+                <div id="totalValueDiv" class="d-inline">
+
+                </div>
+                <a class="btn btn-success" style="font-size: large;" href="~/Order/MakeOrder">Make an order</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-3 d-flex justify-content-around flex-wrap">
+        @foreach (var line in Model.CartLines)
+        {
+            <div class="card mb-3" style="width: 18rem;">
+                <img src="data:image/png;base64,@line.Bicicleta.Photo"
+                     class="card-img-top"
+                     style="max-height: 18rem; max-width: 18rem;"
+                     alt="bici photo">
+                <div class="card-body">
+                    <h5 class="card-title"><a class="titleLink" href="~/Home/BiciInfo/@line.Bicicleta.BicicletaId">@line.Bicicleta.Title</a></h5>
+                    <div id="priceView_@line.Bicicleta.BicicletaId" class="prView">
+
+                    </div>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark decrementBtn" id="bd_@line.Bicicleta.BicicletaId" aria-current="page">-</button>
+                    <input type="number" min="1" max="@line.Bicicleta.Quantity" id="inp_@line.Bicicleta.BicicletaId" value="@line.Count" class="form-control border-dark text-center countInput" style="max-width: 100px; border-radius: 0 !important;" />
+                    <button class="btn btn-outline-dark incrementBtn" value="@line.Bicicleta.Quantity" id="bi_@line.Bicicleta.BicicletaId">+</button>
+                </div>
+                <form method="post" action="~/Cart/RemoveFromCart">
+                    <input type="hidden" name="bicicletaId" value="@line.Bicicleta.BicicletaId"/>
+                    <input type="hidden" name="returnUrl" value="Cart"/>
+                    <button class="btn btn-outline-danger mt-3" type="submit" style="min-width: 100px;">Delete</button>
+                </form>
+                   
+                </div>
+                
+            </div>
+        }
+    </div>
+
+</div>

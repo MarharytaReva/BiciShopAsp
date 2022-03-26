@@ -1,0 +1,103 @@
+﻿@model HomeIndexData
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<div class="text-center" style="margin-top: 7rem;">
+    <h1 class="display-4">Bicicletas</h1>
+    <p style="color: green;">@Model.Text</p>
+
+
+    <div style="background-color: white;" class="d-flex justify-content-between px-5 py-2 mx-3">
+        <div style="display: flex;">
+            <button class="btn btn-dark" id="showFilter">
+                <img src="~/Files/filter.png" class="btnIcon mt-2" />
+                <p class="mb-1">Filter</p>
+            </button>
+            @if (User.IsInRole("head") || User.IsInRole("admin"))
+            {
+                <a class="btn btn-dark ml-1" href="~/Admin/Create">
+                    <img src="~/Files/addition.png" class="btnIcon mt-2" />
+                    <p class="mb-1">Create</p>
+                </a>
+            }
+        </div>
+        
+
+        <div class="my-2 my-lg-0 form-inline" style="min-width: 70%; flex-wrap: nowrap;">
+            <input class="form-control mr-sm-2" style="min-width: 80%;" type="search" placeholder="Search" id="searchText" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 asyncLoadBtn" type="submit">Search</button>
+        </div>
+    </div>
+
+    <div id="filterForm">
+        <div id="innerDiv">
+            <button type="button" class="close" id="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="infoList">
+                <h2 class="font-weight-light">Filter</h2>
+
+                <div class="d-flex justify-content-around flex-wrap">
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="colorSelect" class="custom-select" name="QueryOptions.FiltrationOptions.Color" asp-items="@Model.Colors">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">Color filter</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="typeSelect" class="custom-select" name="QueryOptions.FiltrationOptions.BiciType" asp-items="@Model.BiciTypes">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">Type filter</button>
+                        </div>
+                    </div>
+
+
+                </div>
+                
+
+
+                <h2 class="font-weight-light">Sort</h2>
+
+                <div class="d-flex justify-content-around flex-wrap mb-3">
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="fieldSelect" class="custom-select" name="QueryOptions.SortOptions.FieldSort" asp-items="@Model.SortFields">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">By parameter</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="sortOrderSelect" class="custom-select" name="QueryOptions.SortOptions.OrderSort" asp-items="@Model.SortOrders">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">Sort order</button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="d-flex justify-content-center mb-5">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-dark asyncLoadBtn">Apply</button>
+                        
+                        <button type="button" id="cancelAll" class="btn btn-outline-secondary">Cancel All</button>
+                    </div>
+                </div>
+            </div>
+
+               
+            </div>
+        </div>
+   
+    <div id="blur"></div>
+
+    <div id="biciListDiv" class="mt-5">
+
+    </div>
+</div>

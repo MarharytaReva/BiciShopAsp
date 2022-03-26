@@ -1,0 +1,72 @@
+﻿@model BiciShop.Models.ViewModels.MakeOrderViewModel
+@{
+    ViewData["Title"] = "MakeOrder";
+}
+
+
+<div style="margin-top: 7rem;">
+    <form method="post" class="mt-5">
+
+
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" name="order.name" class="form-control logInp">
+                <span asp-validation-for="Order.Name" class="alert alert-danger alertStyle logInp" role="alert">
+
+                </span>
+            </div>
+
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Lastname</label>
+            <div class="col-sm-10">
+                <input type="text" name="order.lastname" class="form-control logInp">
+                <span asp-validation-for="Order.Lastname" class="alert alert-danger alertStyle logInp" role="alert">
+
+                </span>
+            </div>
+
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Phone</label>
+            <div class="col-sm-10">
+                <input type="tel" name="order.phone" class="form-control logInp">
+                <span asp-validation-for="Order.Phone" class="alert alert-danger alertStyle logInp" role="alert">
+
+                </span>
+            </div>
+
+        </div>
+       
+        <input type="hidden" name="id" value="@Model.Id" />
+        
+
+        <input type="hidden" name="order.email" value="@Model.Order.Email" />
+        <input type="hidden" value="@Model.Order.TotalValue" name="order.totalvalue" />
+        <input type="hidden" value="@Model.Order.UserKey" name="order.userkey" />
+        <div style="width: 100%; text-align: center;">
+            <input type="submit" style="min-width: 100px;" class="btn btn-dark" value="Make an order" />
+        </div>
+
+    </form>
+    <h3 class="text-center text-success mt-3">Total value: @Model.Order.TotalValue ₴</h3>
+    <div class="horizontal">
+        @foreach (var unit in Model.Order.OrderUnits)
+        {
+
+            <div class="card mb-3 item" style="width: 18rem;">
+                <img src="data:image/png;base64,@unit.Bicicleta.Photo"
+                     class="card-img-top"
+                     style="max-height: 18rem; max-width: 18rem;"
+                     alt="bici photo">
+                <div class="card-body">
+                    <h5 class="card-title"><a class="titleLink" href="~/Home/BiciInfo/@unit.Bicicleta.BicicletaId">@unit.Bicicleta.Title</a></h5>
+                    <h3 class="text-success mr-1">@unit.GetValue() ₴</h3>
+                    <p class="card-text">Count - @unit.Count</p>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

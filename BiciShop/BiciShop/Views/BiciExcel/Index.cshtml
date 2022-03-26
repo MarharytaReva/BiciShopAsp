@@ -1,0 +1,112 @@
+﻿@model BiciShop.Models.ViewModels.ExcelViewModels.BiciViewModel
+<div style="margin-top: 7rem;">
+    <h1 class="text-center">Export Bicis</h1>
+    <h3 class="text-center text-danger">@Model.ErrorText</h3>
+    <form method="post" action="~/BiciExcel/ExportToExcel">
+        <div>
+            <div>
+                <h2 class="font-weight-light">Filter</h2>
+
+                <div class="d-flex justify-content-around flex-wrap">
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="colorSelect" class="custom-select" name="QueryOptions.FiltrationOptions.Color" asp-items="@Model.Colors">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">Color filter</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="typeSelect" class="custom-select" name="QueryOptions.FiltrationOptions.BiciType" asp-items="@Model.BiciTypes">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">Type filter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="font-weight-light">Sort</h2>
+
+                <div class="d-flex justify-content-around flex-wrap mb-3">
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="fieldSelect" class="custom-select" name="QueryOptions.SortOptions.FieldSort" asp-items="@Model.SortFields">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">By parameter</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group mx-2 mt-3" style="max-width: 25rem;">
+                        <select id="sortOrderSelect" class="custom-select" name="QueryOptions.SortOptions.OrderSort" asp-items="@Model.SortOrders">
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark">Sort order</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="my-2 my-lg-0 form-inline" style="min-width: 100%; flex-wrap: nowrap;">
+                <input name="QueryOptions.SearchText" class="form-control mr-sm-2" style="min-width: 100%;" type="search" placeholder="Title" id="searchText" aria-label="Search">
+            </div>
+
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Offset</span>
+                </div>
+                <input type="number" min="1" max="1000" name="Offset" value="50" class="form-control" />
+            </div>
+
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Page number</span>
+                </div>
+                <input type="number" min="1" name="QueryOptions.PageNumber" value="1" class="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <input type="submit" value="Export" class="btn btn-success" />
+            </div>
+        </div>
+    </form>
+
+    <h1 class="mt-3 text-center">Edit</h1>
+    <form method="post" action="~/BiciExcel/EditFromExcel" enctype="multipart/form-data">
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" name="postedFile" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+            </div>
+            <div class="input-group-append">
+                <input class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04" value="Submit edit">
+            </div>
+        </div>
+    </form>
+    <h1 class="mt-3 text-center">Add</h1>
+    <form method="post" action="~/BiciExcel/AddFromExcel" enctype="multipart/form-data">
+
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" name="postedFile" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+            </div>
+            <div class="input-group-append">
+                <input class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04" value="Submit add">
+            </div>
+        </div>
+    </form>
+
+    <h1 class="mt-3 text-center">Delete</h1>
+    <form method="post" action="~/BiciExcel/Delete" enctype="multipart/form-data">
+
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" name="postedFile" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+            </div>
+            <div class="input-group-append">
+                <input class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04" value="Submit delete">
+            </div>
+        </div>
+    </form>
+</div>

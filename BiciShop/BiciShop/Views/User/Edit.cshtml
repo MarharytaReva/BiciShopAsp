@@ -1,0 +1,52 @@
+﻿@model BiciShop.Models.ViewModels.EditUserViewModel
+@{
+}
+<div class="text-center">
+    <h1 class="display-4">Edit User</h1>
+    <form method="post" action="~/User/Edit" asp-antiforgery="true">
+
+        <div class="mb-3 row">
+            @Html.LabelFor(x => x.Email, new { @class = "col-sm-2 col-form-label" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+
+                <span asp-validation-for="Email" class="alert alert-danger alertStyle" role="alert">
+
+                </span>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Roles</label>
+            <div class="col-sm-10">
+                <div class="d-flex justify-content-around">
+                    @foreach (var role in Model.AllRoles)
+                    {
+                        <div>
+                            <input type="checkbox" name="roles" value="@role.Name"
+                                   @(Model.UsersRoles.Contains(role.Name) ? "checked='checked'" : "") />
+                            <span>@role.Name</span>
+                        </div>
+
+
+                    }
+
+                </div>
+            </div>
+
+
+        </div>
+       
+
+        <input type="hidden" value="@Model.UserId" name="userId" />
+        <input type="submit" value="Save" class="btn btn-success" />
+    </form>
+    <form method="get" action="~/Account/ChangePassword">
+        <input type="hidden" name="userId" value="@Model.UserId"/>
+        <input type="hidden" name="actionName" value="Users"/>
+        <input type="hidden" name="controllerName" value="User"/>
+        <input class="btn btn-primary mt-3" type="submit" value="Change password"/>
+    </form>
+   
+</div>

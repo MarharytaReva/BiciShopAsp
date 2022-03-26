@@ -1,0 +1,130 @@
+﻿
+
+
+
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+
+    @foreach (var bibi in Model.Bicicletas)
+    {
+    <div class="card mb-3" style="width: 18rem;">
+        <img src="data:image/png;base64,@bibi.Photo"
+             class="card-img-top"
+             style="max-height: 18rem; max-width: 18rem;"
+             alt="bici photo">
+        <div class="card-body">
+            <h5 class="card-title"><a class="titleLink" href="~/Home/BiciInfo/@bibi.BicicletaId">@bibi.Title</a></h5>
+            @if (bibi.Discount != 0)
+            {
+                <div style="display: flex; flex-wrap: nowrap; justify-content: space-between;">
+                    <h3 class="text-right text-dark" style="text-decoration: line-through; font-weight: lighter;">@bibi.Price ₴</h3>
+                    <h3 class="text-right text-danger ">@bibi.GetValueWithDiscount() ₴</h3>
+                </div>
+
+            }
+            else
+            {
+                <h3 class="text-right text-success">@bibi.Price ₴</h3>
+            }
+
+            <div class="btn-group w-100" role="group" aria-label="Basic example">
+                <a  href="~/Order/MakeOrder/@bibi.BicicletaId" class="btn btn-dark" style="min-width: 50%;">Buy</a>
+                <div style="max-width: 30%;">
+                    <form method="post" action="~/Cart/AddToCart">
+                        <input type="hidden" value="@bibi.BicicletaId" name="BicicletaId" />
+                        @Html.Hidden("returnUrl", Context.Request.Path)
+                        <button style="max-width: 100%;" type="submit" class="btn btn-outline-success purchaseBtn">
+                            <img class="purchase btnIcon" src="~/Files/purchase_black.png" />
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            @switch (@bibi.QuantityStatus)
+            {
+                case BLL.DTO.StoreStatus.Available:
+                    <p class="text-success mt-1 text-left" style="font-weight: bold;">Available</p>
+                    break;
+                case BLL.DTO.StoreStatus.NotAvailable:
+                    <p class="text-danger mt-1 text-left" style="font-weight: bold;">Not available</p>
+                    break;
+                case BLL.DTO.StoreStatus.Few:
+                    <p class="text-dark bg-warning text-center" style="font-weight: bold;">Only @bibi.Quantity left</p>
+                    break;
+            }
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">@bibi.BiciType.BiciTypeName type</li>
+           
+        </ul>
+    </div>
+
+    }
+
+</div>
+
+
+<input type="hidden" value="@Model.QueryOptions.PageNumber" id="pageNumberInp" />
+<div style="display: flex; justify-content: center; flex-wrap: nowrap; overflow-x: auto;">
+    @for (int i = 1; i <= Model.PageCount; i++)
+    {
+        if (i == Model.QueryOptions.PageNumber)
+        {
+            <button class="btn btn-success m-1 asyncLoadBtn pageBtn">@i</button>
+        }
+        else
+        {
+            <button class="btn btn-dark m-1 asyncLoadBtn pageBtn">@i</button>
+        }
+    }
+
+</div>
+<script>
+    $('.purchaseBtn').hover(function () {
+        $(this).children('.purchase').attr('src', '/Files/purchase_white.png');
+    })
+    $('.purchaseBtn').mouseleave(function () {
+        if (!$(this).hasClass('clicked')) {
+            $(this).children('.purchase').attr('src', '/Files/purchase_black.png');
+        }
+    })
+</script>
+<script type="text/javascript">
+    $('#cancelAll').click(function () {
+        let searchText = $('#searchText').val()
+        let colorSelect = 'all'
+        let typeSelect = 'all'
+        let sortField = 'None'
+        let sortOrder = 'Descreasing'
+
+        $('#colorSelect').val(colorSelect)
+        $('#typeSelect').val(typeSelect)
+        $('#fieldSelect').val(sortField)
+        $('#sortOrderSelect').val(sortOrder)
+
+        let pageNumber = 1;
+
+        $('#biciListDiv').load(`/Home/BiciList/?firstLoad=false&queryOptions.searchText=${searchText}&queryOptions.filtrationOptions.color=${colorSelect}&queryOptions.filtrationOptions.biciType=${typeSelect}&queryOptions.sortOptions.orderSort=${sortOrder}&queryOptions.sortOptions.fieldSort=${sortField}queryOptions.&pageNumber=${pageNumber}`)
+
+        $('#blur').css('display', 'none')
+        $('#filterForm').css('display', 'none')
+    })
+    $('.asyncLoadBtn').click(function () {
+        let searchText = encodeURIComponent($('#searchText').val())
+        let colorSelect = $('#colorSelect').val()
+        let typeSelect = $('#typeSelect').val()
+        let sortField = $('#fieldSelect').val()
+        let sortOrder = $('#sortOrderSelect').val()
+
+        console.log('bici async btn')
+        let pageNumber = 1;
+
+        if ($(this).hasClass('pageBtn')) {
+            pageNumber = $(this).text();
+        } 
+
+        $('#biciListDiv').load(`/Home/BiciList/?firstLoad=false&queryOptions.searchText=${searchText}&queryOptions.filtrationOptions.color=${colorSelect}&queryOptions.filtrationOptions.biciType=${typeSelect}&queryOptions.sortOptions.orderSort=${sortOrder}&queryOptions.sortOptions.fieldSort=${sortField}&queryOptions.pageNumber=${pageNumber}`)
+
+        $('#blur').css('display', 'none')
+        $('#filterForm').css('display', 'none')
+    })
+</script>

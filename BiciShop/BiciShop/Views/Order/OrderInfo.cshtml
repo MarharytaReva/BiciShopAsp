@@ -1,0 +1,60 @@
+﻿@model BLL.DTO.OrderDTO
+
+<div style="margin-top: 7rem;">
+
+    <div class="container">
+        <div style="display: flex; flex-wrap: nowrap;">
+            <h3 class="mt-4">Order Details</h3>
+            @if (Model.HandlePhase.IsCancelAvaliable)
+            {
+                <form class="ml-4 mt-4" method="post" action="~/Order/Delete">
+                    <input type="hidden" name="orderid" value="@Model.OrderId" />
+                    <input class="btn btn-outline-danger" value="Delete order" type="submit" />
+                </form>
+            }
+        </div>
+        
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Email</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>@Model.Phone</td>
+                </tr>
+                <tr>
+                    <td>Name Lastname</td>
+                    <td>@Model.Name @Model.Lastname</td>
+                </tr>
+                <tr>
+                    <td>Date and time</td>
+                    <td>@Model.Date</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Total Value</td>
+                    <td class="table-success">@Model.TotalValue ₴</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="horizontal">
+        @foreach (var unit in Model.OrderUnits)
+        {
+
+            <div class="card mb-3 item" style="width: 18rem;">
+                <img src="data:image/png;base64,@unit.Bicicleta.Photo"
+                     class="card-img-top"
+                     style="max-height: 18rem; max-width: 18rem;"
+                     alt="bici photo">
+                <div class="card-body">
+                    <h5 class="card-title"><a class="titleLink" href="~/Home/BiciInfo/@unit.Bicicleta.BicicletaId">@unit.Bicicleta.Title</a></h5>
+                    <h3 class="text-success mr-1">@unit.GetValue() ₴</h3>
+                    <p class="card-text">Count - @unit.Count</p>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿@model BiciShop.Models.ViewModels.CreateUserViewModel
+@{
+}
+<div class="text-center">
+    <h1 class="display-4">Create User</h1>
+    <form method="post" action="~/User/Create" asp-antiforgery="true">
+
+        <div class="mb-3 row">
+            @Html.LabelFor(x => x.Email, new { @class = "col-sm-2 col-form-label" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+
+                <span asp-validation-for="Email" class="alert alert-danger alertStyle" role="alert">
+
+                </span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            @Html.LabelFor(x => x.Password, new { @class = "col-sm-2 col-form-label" })
+
+            <div class="col-sm-10">
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+
+                <span asp-validation-for="Password" class="alert alert-danger alertStyle" role="alert">
+
+                </span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            @Html.LabelFor(x => x.Confirm, new { @class = "col-sm-2 col-form-label" })
+
+            <div class="col-sm-10">
+                @Html.PasswordFor(x => x.Confirm, new { @class = "form-control" })
+
+                <span asp-validation-for="Confirm" class="alert alert-danger alertStyle" role="alert">
+
+                </span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Roles</label>
+            <div class="col-sm-10">
+                <div class="d-flex justify-content-around">
+                    @foreach (var role in Model.AllRoles)
+                    {
+                        <div>
+                            <input type="checkbox" name="roles" value="@role.Name" />
+                            <span>@role.Name</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </div>
+        
+            <input type="submit" value="Create" class="btn btn-success" />
+    </form>
+
+</div>
